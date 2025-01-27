@@ -469,6 +469,7 @@ export const ModalIdentifiers = {
     SHARED_CHANNEL_REMOTE_INVITE: 'shared_channel_remote_invite',
     SHARED_CHANNEL_REMOTE_UNINVITE: 'shared_channel_remote_uninvite',
     USER_PROPERTY_FIELD_DELETE: 'user_property_field_delete',
+    USER_HAS_NO_ACCESS_TO_THE_CHANNEL: 'user_has_no_access_to_the_channel'
 };
 
 export const UserStatuses = {

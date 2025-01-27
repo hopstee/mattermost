@@ -28,6 +28,7 @@ export type OwnProps = {
     metadata: PostPreviewMetadata;
     preventClickAction?: boolean;
     previewFooterMessage?: string;
+    allowRedirectToOriginalPost?: boolean;
 }
 
 function makeMapStateToProps() {

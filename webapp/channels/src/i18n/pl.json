@@ -4695,6 +4695,7 @@
   "post_info.tooltip.add_reactions": "Dodaj Reakcję",
   "post_info.unpin": "Odepnij od kanału",
   "post_info.unread": "Oznacz jako nieprzeczytane",
+  "post_info.noAccessToChannel": "Nie masz dostępu do kanału",
   "post_message_preview.channel": "Widoczne tylko dla użytkowników w ~{channel}",
   "post_message_view.edited": "Edytowany",
   "post_message_view.view_post_edit_history": "Kliknij, aby zobaczyć historię",

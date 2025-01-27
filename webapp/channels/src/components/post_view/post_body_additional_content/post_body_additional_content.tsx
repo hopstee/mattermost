@@ -126,6 +126,7 @@ export default class PostBodyAdditionalContent extends React.PureComponent<Props
             if (embed.data && 'post_id' in embed.data && embed.data.post_id) {
                 return (
                     <PostMessagePreview
+                        allowRedirectToOriginalPost={this.props.post.allow_go_to_post}
                         metadata={embed.data}
                         handleFileDropdownOpened={this.props.handleFileDropdownOpened}
                     />

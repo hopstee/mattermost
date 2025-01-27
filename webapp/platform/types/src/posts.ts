@@ -102,6 +102,7 @@ export type Post = {
     is_following?: boolean;
     exists?: boolean;
     remote_id?: string;
+    allow_go_to_post?: boolean;
 };
 
 export type PostState = 'DELETED';

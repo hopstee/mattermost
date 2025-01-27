@@ -4695,6 +4695,7 @@
   "post_info.tooltip.add_reactions": "Přidat reakci",
   "post_info.unpin": "Odepnout z kanálu",
   "post_info.unread": "Označit jako nepřečtené",
+  "post_info.noAccessToChannel": "Nemáte přístup ke kanálu",
   "post_message_preview.channel": "Viditelné pouze pro uživatele v ~{channel}",
   "post_message_view.edited": "Upraveno",
   "post_message_view.view_post_edit_history": "Kliknutím zobrazíte historii",

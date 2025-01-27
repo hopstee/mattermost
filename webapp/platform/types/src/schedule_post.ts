@@ -71,6 +71,7 @@ export function scheduledPostToPost(scheduledPost: ScheduledPost): Post {
             files: [],
             images: {},
         },
+        allow_go_to_post: false,
     };
 
     if (scheduledPost.metadata) {

@@ -702,6 +702,7 @@ func (a *App) SendNotifications(c request.CTX, post *model.Post, team *model.Tea
 	}
 	usePostedAckHook(message, post.UserId, channel.Type, usersToAck)
 
+	post, _ = a.SanitizePostPermalinkForUser(c, post)
 	appErr := a.publishWebsocketEventForPost(c, post, message)
 	if appErr != nil {
 		a.CountNotificationReason(model.NotificationStatusError, model.NotificationTypeWebsocket, model.NotificationReasonFetchError, model.NotificationNoPlatform)
@@ -824,6 +825,21 @@ func (a *App) SendNotifications(c request.CTX, post *model.Post, team *model.Tea
 					userThread.Post.SanitizeProps()
 
 					sanitizedPost, err := a.SanitizePostMetadataForUser(c, userThread.Post, uid)
+					if err != nil {
+						a.CountNotificationReason(model.NotificationStatusError, model.NotificationTypeWebsocket, model.NotificationReasonParseError, model.NotificationNoPlatform)
+						a.NotificationsLog().Error("Failed to sanitize metadata",
+							mlog.String("type", model.NotificationTypeWebsocket),
+							mlog.String("post_id", post.Id),
+							mlog.String("status", model.NotificationStatusError),
+							mlog.String("reason", model.NotificationReasonParseError),
+							mlog.String("sender_id", sender.Id),
+							mlog.String("receiver_id", uid),
+							mlog.Err(err),
+						)
+						return nil, err
+					}
+
+					sanitizedPost, err = a.SanitizePostPermalinkForUser(c, sanitizedPost)
 					if err != nil {
 						a.CountNotificationReason(model.NotificationStatusError, model.NotificationTypeWebsocket, model.NotificationReasonParseError, model.NotificationNoPlatform)
 						a.NotificationsLog().Error("Failed to sanitize metadata",
@@ -1007,6 +1023,11 @@ func (a *App) RemoveNotifications(c request.CTX, post *model.Post, channel *mode
 				userThread.Post.SanitizeProps()
 
 				sanitizedPost, err1 := a.SanitizePostMetadataForUser(c, userThread.Post, userID)
+				if err1 != nil {
+					return err1
+				}
+
+				sanitizedPost, err1 = a.SanitizePostPermalinkForUser(c, sanitizedPost)
 				if err1 != nil {
 					return err1
 				}

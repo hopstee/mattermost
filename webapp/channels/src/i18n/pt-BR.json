@@ -3702,6 +3702,7 @@
   "post_info.tooltip.add_reactions": "Adicionar Reação",
   "post_info.unpin": "Desafixar do Canal",
   "post_info.unread": "Marcar como Não Lido",
+  "post_info.noAccessToChannel": "Você não tem acesso ao canal",
   "post_message_preview.channel": "Visível apenas para usuários em ~{channel}",
   "post_message_view.edited": "(editado)",
   "post_message_view.view_post_edit_history": "Clique para ver o histórico",

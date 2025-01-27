@@ -3424,6 +3424,7 @@
   "post_info.tooltip.add_reactions": "Reaction را اضافه کنید",
   "post_info.unpin": "پین را از کانال بردارید",
   "post_info.unread": "به عنوان \"خوانده نشده\" علامت گذاری کن",
+  "post_info.noAccessToChannel": "شما به کانال دسترسی ندارید",
   "post_message_preview.channel": "فقط برای کاربران در ~{channel} قابل مشاهده است",
   "post_message_view.edited": "ویرایش شده",
   "post_pre_header.flagged": "ذخیره",

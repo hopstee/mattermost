@@ -4677,6 +4677,7 @@
   "post_info.tooltip.add_reactions": "Додати Реакцію",
   "post_info.unpin": "Відкріпити від каналу",
   "post_info.unread": "Позначити як Непрочитане",
+  "post_info.noAccessToChannel": "У вас немає доступу до каналу",
   "post_message_preview.channel": "Відображається лише для користувачів у ~{channel}",
   "post_message_view.edited": "Змінено",
   "post_message_view.view_post_edit_history": "Натисніть, щоб переглянути історію",

@@ -4460,6 +4460,7 @@
   "post_info.tooltip.add_reactions": "Добавить реакцию",
   "post_info.unpin": "Открепить сообщение",
   "post_info.unread": "Пометить как непрочитанное",
+  "post_info.noAccessToChannel": "У вас нет доступа к каналу",
   "post_message_preview.channel": "Видно только пользователям ~{channel}",
   "post_message_view.edited": "Отредактировано",
   "post_message_view.view_post_edit_history": "Нажмите для просмотра истории",

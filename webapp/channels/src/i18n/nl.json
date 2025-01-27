@@ -4695,6 +4695,7 @@
   "post_info.tooltip.add_reactions": "Reactie toevoegen",
   "post_info.unpin": "Losmaken van Kanaal",
   "post_info.unread": "Markeer als Ongelezen",
+  "post_info.noAccessToChannel": "Je hebt geen toegang tot het kanaal",
   "post_message_preview.channel": "Alleen zichtbaar voor gebruikers in ~{channel}",
   "post_message_view.edited": "Bewerkt",
   "post_message_view.view_post_edit_history": "Klik om de geschiedenis te bekijken",

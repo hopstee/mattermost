@@ -2798,6 +2798,11 @@ func (a *App) UpdateThreadFollowForUserFromChannelAdd(c request.CTX, userID, tea
 	if appErr != nil {
 		return appErr
 	}
+
+	sanitizedPost, appErr = a.SanitizePostPermalinkForUser(c, sanitizedPost)
+	if appErr != nil {
+		return appErr
+	}
 	userThread.Post = sanitizedPost
 
 	payload, jsonErr := json.Marshal(userThread)

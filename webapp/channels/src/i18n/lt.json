@@ -3836,6 +3836,7 @@
   "post_info.tooltip.add_reactions": "Pridėti reakciją",
   "post_info.unpin": "Atsegti nuo kanalo",
   "post_info.unread": "Žymėti kaip neskaitytą",
+  "post_info.noAccessToChannel": "Jūs neturite prieigos prie kanalo",
   "post_message_preview.channel": "Mato tik ~{channel} naudotojai",
   "post_message_view.edited": "Redaguota",
   "post_message_view.view_post_edit_history": "Spustelėkite norėdami peržiūrėti istoriją",

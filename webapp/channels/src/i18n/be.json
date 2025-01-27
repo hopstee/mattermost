@@ -3498,6 +3498,7 @@
   "post_info.tooltip.add_reactions": "Дадаць рэакцыю",
   "post_info.unpin": "Адмацаваць паведамленне",
   "post_info.unread": "Пазначыць як непрачытанае",
+  "post_info.noAccessToChannel": "У вас няма доступу да канала",
   "post_message_preview.channel": "Бачны толькі карыстальнікам у ~{channel}",
   "post_message_view.edited": "(адрэдагавана)",
   "post_pre_header.flagged": "Захаваны",

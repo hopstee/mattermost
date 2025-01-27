@@ -4695,6 +4695,7 @@
   "post_info.tooltip.add_reactions": "Lägg till reaktion",
   "post_info.unpin": "\"o\"-nåla från kanalen",
   "post_info.unread": "Markera som oläst",
+  "post_info.noAccessToChannel": "Du har inte åtkomst till kanalen",
   "post_message_preview.channel": "Kan bara ses av användare i ~{channel}",
   "post_message_view.edited": "Redigerad",
   "post_message_view.view_post_edit_history": "Klicka för att se historik",

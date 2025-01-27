@@ -116,6 +116,8 @@ type Post struct {
 	Participants []*User       `json:"participants"`
 	IsFollowing  *bool         `json:"is_following,omitempty"` // for root posts in collapsed thread mode indicates if the current user is following this thread
 	Metadata     *PostMetadata `json:"metadata,omitempty"`
+
+	AllowGoToPost bool `json:"allow_go_to_post,omitempty"` // if user has access to the channel
 }
 
 func (o *Post) Auditable() map[string]interface{} {
@@ -125,25 +127,26 @@ func (o *Post) Auditable() map[string]interface{} {
 	}
 
 	return map[string]interface{}{
-		"id":              o.Id,
-		"create_at":       o.CreateAt,
-		"update_at":       o.UpdateAt,
-		"edit_at":         o.EditAt,
-		"delete_at":       o.DeleteAt,
-		"is_pinned":       o.IsPinned,
-		"user_id":         o.UserId,
-		"channel_id":      o.ChannelId,
-		"root_id":         o.RootId,
-		"original_id":     o.OriginalId,
-		"type":            o.Type,
-		"props":           o.GetProps(),
-		"file_ids":        o.FileIds,
-		"pending_post_id": o.PendingPostId,
-		"remote_id":       o.RemoteId,
-		"reply_count":     o.ReplyCount,
-		"last_reply_at":   o.LastReplyAt,
-		"is_following":    o.IsFollowing,
-		"metadata":        metaData,
+		"id":               o.Id,
+		"create_at":        o.CreateAt,
+		"update_at":        o.UpdateAt,
+		"edit_at":          o.EditAt,
+		"delete_at":        o.DeleteAt,
+		"is_pinned":        o.IsPinned,
+		"user_id":          o.UserId,
+		"channel_id":       o.ChannelId,
+		"root_id":          o.RootId,
+		"original_id":      o.OriginalId,
+		"type":             o.Type,
+		"props":            o.GetProps(),
+		"file_ids":         o.FileIds,
+		"pending_post_id":  o.PendingPostId,
+		"remote_id":        o.RemoteId,
+		"reply_count":      o.ReplyCount,
+		"last_reply_at":    o.LastReplyAt,
+		"is_following":     o.IsFollowing,
+		"metadata":         metaData,
+		"allow_go_to_post": o.AllowGoToPost,
 	}
 }
 
@@ -317,6 +320,7 @@ func (o *Post) ShallowCopy(dst *Post) error {
 		dst.IsFollowing = NewPointer(*o.IsFollowing)
 	}
 	dst.RemoteId = o.RemoteId
+	dst.AllowGoToPost = o.AllowGoToPost
 	return nil
 }
 

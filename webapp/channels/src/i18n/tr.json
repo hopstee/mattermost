@@ -4695,6 +4695,7 @@
   "post_info.tooltip.add_reactions": "Tepki ver",
   "post_info.unpin": "Kanal sabitlemesini kaldır",
   "post_info.unread": "Okunmamış olarak işaretle",
+  "post_info.noAccessToChannel": "Kanala erişiminiz yok",
   "post_message_preview.channel": "Yalnızca ~{channel} içindeki kullanıcılara görüntülenir",
   "post_message_view.edited": "Düzenlendi",
   "post_message_view.view_post_edit_history": "Geçmişi görüntülemek için tıklayın",

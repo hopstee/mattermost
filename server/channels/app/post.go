@@ -443,6 +443,11 @@ func (a *App) CreatePost(c request.CTX, post *model.Post, channel *model.Channel
 		return nil, err
 	}
 
+	rpost, err = a.SanitizePostPermalinkForUser(c, rpost)
+	if err != nil {
+		return nil, err
+	}
+
 	return rpost, nil
 }
 
@@ -612,9 +617,12 @@ func (a *App) SendEphemeralPost(c request.CTX, userID string, post *model.Post) 
 
 		// If we failed to sanitize the post, we still want to remove the metadata.
 		sanitizedPost = post.Clone()
-		sanitizedPost.Metadata = nil
-		sanitizedPost.DelProp(model.PostPropsPreviewedPost)
+		// sanitizedPost.Metadata = nil
+		// sanitizedPost.DelProp(model.PostPropsPreviewedPost)
+		sanitizedPost.AllowGoToPost = false
 	}
+
+	sanitizedPost, _ = a.SanitizePostPermalinkForUser(c, sanitizedPost)
 	post = sanitizedPost
 
 	postJSON, jsonErr := post.ToJSON()
@@ -646,9 +654,12 @@ func (a *App) UpdateEphemeralPost(c request.CTX, userID string, post *model.Post
 
 		// If we failed to sanitize the post, we still want to remove the metadata.
 		sanitizedPost = post.Clone()
-		sanitizedPost.Metadata = nil
-		sanitizedPost.DelProp(model.PostPropsPreviewedPost)
+		// sanitizedPost.Metadata = nil
+		// sanitizedPost.DelProp(model.PostPropsPreviewedPost)
+		sanitizedPost.AllowGoToPost = false
 	}
+
+	sanitizedPost, _ = a.SanitizePostPermalinkForUser(c, sanitizedPost)
 	post = sanitizedPost
 
 	postJSON, jsonErr := post.ToJSON()
@@ -820,15 +831,20 @@ func (a *App) UpdatePost(c request.CTX, receivedUpdatedPost *model.Post, updateP
 
 		// If we failed to sanitize the post, we still want to remove the metadata.
 		sanitizedPost = rpost.Clone()
-		sanitizedPost.Metadata = nil
-		sanitizedPost.DelProp(model.PostPropsPreviewedPost)
+		// sanitizedPost.Metadata = nil
+		// sanitizedPost.DelProp(model.PostPropsPreviewedPost)
+		sanitizedPost.AllowGoToPost = false
 	}
+
+	sanitizedPost, _ = a.SanitizePostPermalinkForUser(c, sanitizedPost)
 	rpost = sanitizedPost
 
 	return rpost, nil
 }
 
 func (a *App) publishWebsocketEventForPost(rctx request.CTX, post *model.Post, message *model.WebSocketEvent) *model.AppError {
+	a.SanitizePostPermalinkForUser(rctx, post)
+
 	postJSON, jsonErr := post.ToJSON()
 	if jsonErr != nil {
 		a.CountNotificationReason(model.NotificationStatusError, model.NotificationTypeAll, model.NotificationReasonMarshalError, model.NotificationNoPlatform)

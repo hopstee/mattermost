@@ -166,6 +166,13 @@ func createEphemeralPost(c *Context, w http.ResponseWriter, r *http.Request) {
 		c.Err = err
 		return
 	}
+
+	rp, err = c.App.SanitizePostPermalinkForUser(c.AppContext, rp)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
 	if err := rp.EncodeJSON(w); err != nil {
 		c.Logger.Warn("Error while writing response", mlog.Err(err))
 	}
@@ -282,6 +289,12 @@ func getPostsForChannel(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	clientPostList, err = c.App.SanitizePostListPermalinkForUser(c.AppContext, clientPostList)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
 	if err := clientPostList.EncodeJSON(w); err != nil {
 		c.Logger.Warn("Error while writing response", mlog.Err(err))
 	}
@@ -345,6 +358,12 @@ func getPostsForChannelAroundLastUnread(c *Context, w http.ResponseWriter, r *ht
 
 	clientPostList := c.App.PreparePostListForClient(c.AppContext, postList)
 	clientPostList, err = c.App.SanitizePostListMetadataForUser(c.AppContext, clientPostList, c.AppContext.Session().UserId)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
+	clientPostList, err = c.App.SanitizePostListPermalinkForUser(c.AppContext, clientPostList)
 	if err != nil {
 		c.Err = err
 		return
@@ -436,6 +455,13 @@ func getFlaggedPostsForUser(c *Context, w http.ResponseWriter, r *http.Request) 
 		c.Err = err
 		return
 	}
+
+	clientPostList, err = c.App.SanitizePostListPermalinkForUser(c.AppContext, clientPostList)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
 	if err := clientPostList.EncodeJSON(w); err != nil {
 		c.Logger.Warn("Error while writing response", mlog.Err(err))
 	}
@@ -468,6 +494,12 @@ func getPost(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	post = c.App.PreparePostForClientWithEmbedsAndImages(c.AppContext, post, false, false, true)
 	post, err = c.App.SanitizePostMetadataForUser(c.AppContext, post, c.AppContext.Session().UserId)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
+	post, err = c.App.SanitizePostPermalinkForUser(c.AppContext, post)
 	if err != nil {
 		c.Err = err
 		return
@@ -727,6 +759,12 @@ func getPostThread(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	clientPostList, err = c.App.SanitizePostListPermalinkForUser(c.AppContext, clientPostList)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
 	w.Header().Set(model.HeaderEtagServer, clientPostList.Etag())
 
 	if err := clientPostList.EncodeJSON(w); err != nil {
@@ -808,6 +846,12 @@ func searchPosts(c *Context, w http.ResponseWriter, r *http.Request, teamId stri
 
 	clientPostList := c.App.PreparePostListForClient(c.AppContext, results.PostList)
 	clientPostList, err = c.App.SanitizePostListMetadataForUser(c.AppContext, clientPostList, c.AppContext.Session().UserId)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
+	clientPostList, err = c.App.SanitizePostListPermalinkForUser(c.AppContext, clientPostList)
 	if err != nil {
 		c.Err = err
 		return

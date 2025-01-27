@@ -207,8 +207,13 @@ func (a *App) getEmbedsAndImages(c request.CTX, post *model.Post, isNewPost bool
 }
 
 func removePermalinkMetadataFromPost(post *model.Post) {
-	removeEmbeddedPostsFromMetadata(post)
-	post.DelProp(model.PostPropsPreviewedPost)
+	// removeEmbeddedPostsFromMetadata(post)
+	// post.DelProp(model.PostPropsPreviewedPost)
+
+	// Previously user wos not shown a preview of the message if he did not have access to the channel
+	// Now we simply do not allow the user to go to the channel if he does not have access
+
+	post.AllowGoToPost = false
 }
 
 func removeEmbeddedPostsFromMetadata(post *model.Post) {
@@ -256,6 +261,10 @@ func (a *App) SanitizePostMetadataForUser(c request.CTX, post *model.Post, userI
 		return nil, err
 	}
 
+	if !post.AllowGoToPost {
+		post.AllowGoToPost = true
+	}
+
 	if previewedChannel != nil && !a.HasPermissionToReadChannel(c, userID, previewedChannel) {
 		removePermalinkMetadataFromPost(post)
 	}
@@ -267,6 +276,51 @@ func (a *App) SanitizePostListMetadataForUser(c request.CTX, postList *model.Pos
 	clonedPostList := postList.Clone()
 	for postID, post := range clonedPostList.Posts {
 		sanitizedPost, err := a.SanitizePostMetadataForUser(c, post, userID)
+		if err != nil {
+			return nil, err
+		}
+		clonedPostList.Posts[postID] = sanitizedPost
+	}
+	return clonedPostList, nil
+}
+
+func (a *App) removePermalinkFromPost(c request.CTX, post *model.Post) bool {
+	link, _ := a.getFirstLinkAndImages(c, post.Message)
+	if link == "" {
+		return false
+	}
+
+	if !looksLikeAPermalink(link, a.GetSiteURL()) {
+		return false
+	}
+
+	post.Message = strings.Replace(post.Message, link, "", 1)
+
+	return true
+}
+
+func (a *App) SanitizePostPermalinkForUser(c request.CTX, post *model.Post) (*model.Post, *model.AppError) {
+	previewPost := post.GetPreviewPost()
+	if previewPost == nil {
+		return post, nil
+	}
+
+	previewedChannel, err := a.GetChannel(c, previewPost.Post.ChannelId)
+	if err != nil {
+		return post, err
+	}
+
+	if previewedChannel != nil {
+		a.removePermalinkFromPost(c, post)
+	}
+
+	return post, nil
+}
+
+func (a *App) SanitizePostListPermalinkForUser(c request.CTX, postList *model.PostList) (*model.PostList, *model.AppError) {
+	clonedPostList := postList.Clone()
+	for postID, post := range clonedPostList.Posts {
+		sanitizedPost, err := a.SanitizePostPermalinkForUser(c, post)
 		if err != nil {
 			return nil, err
 		}

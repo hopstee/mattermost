@@ -1066,6 +1066,8 @@ type AppIface interface {
 	Saml() einterfaces.SamlInterface
 	SanitizePostListMetadataForUser(c request.CTX, postList *model.PostList, userID string) (*model.PostList, *model.AppError)
 	SanitizePostMetadataForUser(c request.CTX, post *model.Post, userID string) (*model.Post, *model.AppError)
+	SanitizePostListPermalinkForUser(c request.CTX, postList *model.PostList) (*model.PostList, *model.AppError)
+	SanitizePostPermalinkForUser(c request.CTX, post *model.Post) (*model.Post, *model.AppError)
 	SanitizeProfile(user *model.User, asAdmin bool)
 	SanitizeTeam(session model.Session, team *model.Team) *model.Team
 	SanitizeTeams(session model.Session, teams []*model.Team) []*model.Team

@@ -45,7 +45,20 @@ export type Props = OwnProps & {
 };
 
 const PostMessagePreview = (props: Props) => {
-    const {currentTeamUrl, channelDisplayName, user, previewPost, metadata, isEmbedVisible, compactDisplay, preventClickAction, previewFooterMessage, handleFileDropdownOpened, isPostPriorityEnabled} = props;
+    const {
+        currentTeamUrl,
+        channelDisplayName,
+        user,
+        previewPost,
+        metadata,
+        isEmbedVisible,
+        compactDisplay,
+        preventClickAction,
+        previewFooterMessage,
+        handleFileDropdownOpened,
+        isPostPriorityEnabled,
+        allowRedirectToOriginalPost,
+    } = props;
 
     const toggleEmbedVisibility = () => {
         if (previewPost) {
@@ -159,7 +172,8 @@ const PostMessagePreview = (props: Props) => {
         <PostAttachmentContainer
             className='permalink'
             link={`${teamUrl}/pl/${metadata.post_id}`}
-            preventClickAction={preventClickAction}
+            preventClickAction={preventClickAction || !allowRedirectToOriginalPost}
+            allowRedirectToOriginalPost={allowRedirectToOriginalPost}
         >
             <div className='post-preview'>
                 <div className='post-preview__header'>
@@ -204,7 +218,9 @@ const PostMessagePreview = (props: Props) => {
                 />
                 {urlPreview}
                 {fileAttachmentPreview}
-                {previewFooter}
+
+                {/* Remove footer with info about who can view post, because now user can forward post to anyone from every channel */}
+                {/* {previewFooter} */}
             </div>
         </PostAttachmentContainer>
     );

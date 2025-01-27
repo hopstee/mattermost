@@ -2774,6 +2774,7 @@
   "post_info.tooltip.add_reactions": "Legg til reaksjon",
   "post_info.unpin": "Løsne fra kanalen",
   "post_info.unread": "Merk som ulest",
+  "post_info.noAccessToChannel": "Du har ikke tilgang til kanalen",
   "post_message_preview.channel": "Bare synlig for brukere i ~{channel}",
   "post_message_view.edited": "Endret",
   "post_message_view.view_post_edit_history": "Klikk for å se historikk",

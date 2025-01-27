@@ -3667,6 +3667,7 @@
   "post_info.tooltip.add_reactions": "Reactie toevoegen",
   "post_info.unpin": "Losmaken van Kanaal",
   "post_info.unread": "Markeer als Ongelezen",
+  "post_info.noAccessToChannel": "Jo hawwe gjin tagong ta it kanaal",
   "post_message_preview.channel": "Alleen zichtbaar voor gebruikers in ~{channel}",
   "post_message_view.edited": "Bewerkt",
   "post_pre_header.flagged": "Bewaard",

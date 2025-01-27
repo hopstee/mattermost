@@ -11,14 +11,21 @@ import {isTeamSameWithCurrentTeam} from 'mattermost-redux/selectors/entities/tea
 import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
 
 import {focusPost} from 'components/permalink_view/actions';
+import InfoToast from 'components/info_toast/info_toast';
+
+import {openModal} from 'actions/views/modals';
 
 import type {GlobalState} from 'types/store';
+import { ModalIdentifiers } from 'utils/constants';
+import { AlertOutlineIcon } from '@mattermost/compass-icons/components';
+import { useIntl } from 'react-intl';
 
 export type Props = {
     className?: string;
     children?: JSX.Element;
     preventClickAction?: boolean;
     link: string;
+    allowRedirectToOriginalPost?: boolean;
 };
 
 type LinkParams = {
@@ -32,12 +39,19 @@ const getTeamAndPostIdFromLink = (link: string) => {
 };
 
 const PostAttachmentContainer = (props: Props) => {
-    const {children, className, link, preventClickAction} = props;
+    const {children, className, link, preventClickAction, allowRedirectToOriginalPost} = props;
     const history = useHistory();
 
     const params = getTeamAndPostIdFromLink(link);
 
     const dispatch = useDispatch();
+
+    const intl = useIntl();
+
+    const infoString = intl.formatMessage({
+        id: 'post_info.noAccessToChannel',
+        defaultMessage: 'You have no access to the channel',
+    });
 
     const currentUserId = useSelector(getCurrentUserId);
     const shouldFocusPostWithoutRedirect = useSelector((state: GlobalState) => isTeamSameWithCurrentTeam(state, params?.teamName ?? ''));
@@ -70,11 +84,31 @@ const PostAttachmentContainer = (props: Props) => {
             }
         }
     }, [className, crtEnabled, dispatch, history, link, params, post, shouldFocusPostWithoutRedirect, currentUserId]);
+
+    const showInfoTooltip = () => {
+        const infoToastModalData = {
+            modalId: ModalIdentifiers.USER_HAS_NO_ACCESS_TO_THE_CHANNEL,
+            dialogType: InfoToast,
+            dialogProps: {
+                content: {
+                    icon: <AlertOutlineIcon size={18}/>,
+                    message: infoString,
+                },
+            },
+        };
+
+        dispatch(openModal(infoToastModalData));
+    };
     return (
         <div
             className={`attachment attachment--${className}`}
             role={preventClickAction ? undefined : 'button'}
-            onClick={preventClickAction ? undefined : handleOnClick}
+            onClick={preventClickAction
+                ? !allowRedirectToOriginalPost
+                    ? showInfoTooltip
+                    :undefined
+                : handleOnClick
+            }
         >
             <div
                 className={`attachment__content attachment__content--${className}`}
